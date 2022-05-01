@@ -1,0 +1,63 @@
+Cruise Control Example (Python & C++)
+==============================================
+Summary
+-------
+This example is constructed to demonstrate at least a basic level of coding knowledge in C++ and Python. It also demonstrates some knowledge of dynamic modelling, controls and git revision control. 
+
+**Model**
+
+A simple vehicle model is developed that consists of vehicle mass, air resistance, road friction.
+
+A model disturbance can be applied as an additional force that can vary over time. In this example, this is used to show how the PID terms vary with more or less resistance.
+
+Model Input: Force (N)
+
+Model Output: Vehicle velocity (m/s)
+
+
+**Controller**
+
+A PID controller with a feed-forward term is used to control the vehicle to a desired setpoint.
+
+The feed-forward lookup table was constructed by finding the required force to maintain a desired velocity setpoint.
+
+The PID gains were determined with simple hand tuning using the Ziegler-Nichols method as follows:
+With the integral and derivative gain set to zero, increase the proportional gain until the system starts to oscillate at the ultimate gain (K<sub>u</sub>) at the oscillation period (T<sub>u</sub>).
+
+K<sub>p</sub> = 0.6 * K<sub>u</sub>
+
+K<sub>i</sub> = 1.2 * K<sub>u</sub> / T<sub>u</sub>
+
+K<sub>d</sub> = 3.0 * K<sub>u</sub> * T<sub>u</sub> / T<sub>u</sub>
+
+
+-----------
+Build It
+-----------
+    git clone XXXXXXXXXXXX
+    cd cruisecontrol
+    mkdir build
+    cd build
+    cmake ..
+    make
+
+-----------
+Run It
+-----------
+
+    sudo ./cruisecontrol
+----------------
+Plot It
+----------------
+    python3 plot_cruise_control_data.py data_file.txt
+
+Example Plot
+
+INSERT PLOT
+
+------------
+The Code
+------------
+- Class for the vehicle model
+- Class for the PID control
+- 
