@@ -6,7 +6,7 @@ This example is constructed to demonstrate at least a basic level of coding know
 
 **Model**
 
-A simple vehicle model is developed that consists of vehicle mass, air resistance, road friction.
+A simple vehicle model is developed that consists of vehicle mass, air resistance, rolling friction. The vehicle equations are taken from this example: http://www.cds.caltech.edu/~murray/amwiki/Cruise_control
 
 A model disturbance can be applied as an additional force that can vary over time. In this example, this is used to show how the PID terms vary with more or less resistance.
 
