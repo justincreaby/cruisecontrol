@@ -2,7 +2,6 @@
 #include "pid_controller.h"
 #include "vehicle_model.h"
 #include <fstream>
-#include <iostream>
 
 // Model Parameters
 const float COEFF_DRAG = 0.32f;
@@ -30,11 +29,10 @@ int main()
   std::ofstream dataFile;
   dataFile.open ("data_file.csv");
   dataFile << "time,setpoint,velocity,pterm,iterm,dterm,ffterm,force\n";
-;
-std::cout << PIDController.update(30.0f, 2.2f) << std::endl;
+
   float timeSec = 0.0f;
   float setPointMPerSec = 30.0f; // 30 m/s = 108 kph
-  while (0) //(timeSec < MAX_SIM_TIME)
+  while (timeSec < MAX_SIM_TIME)
   {
     // Update set point mid way through sim
     if (timeSec > (0.5f * MAX_SIM_TIME))

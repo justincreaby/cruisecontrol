@@ -8,7 +8,7 @@ This example is constructed to demonstrate at least a basic level of coding know
 
 A simple vehicle model is developed that consists of vehicle mass, air resistance, rolling friction. The vehicle equations are taken from this example: http://www.cds.caltech.edu/~murray/amwiki/Cruise_control
 
-A model disturbance can be applied as an additional force that can vary over time. In this example, this is used to show how the PID terms vary with more or less resistance.
+The set point was updated half way through the sim to show how the PID terms vary.
 
 Model Input: Force (N)
 
@@ -19,7 +19,7 @@ Model Output: Vehicle velocity (m/s)
 
 A PID controller with a feed-forward term is used to control the vehicle to a desired setpoint.
 
-The feed-forward lookup table was constructed by finding the required force to maintain a desired velocity setpoint.
+The feed-forward lookup table was constructed by finding the required force to maintain a desired velocity setpoint. [Ran out of time for this]
 
 The PID gains were determined with simple hand tuning using the Ziegler-Nichols method as follows:
 With the integral and derivative gain set to zero, increase the proportional gain until the system starts to oscillate at the ultimate gain (K<sub>u</sub>) at the oscillation period (T<sub>u</sub>).
@@ -30,6 +30,7 @@ K<sub>i</sub> = 1.2 * K<sub>u</sub> / T<sub>u</sub>
 
 K<sub>d</sub> = 3.0 * K<sub>u</sub> * T<sub>u</sub> / T<sub>u</sub>
 
+[Ended up roughly hand tuning, it is a first order system.]
 
 -----------
 Build It
@@ -39,25 +40,20 @@ Build It
     mkdir build
     cd build
     cmake ..
-    make
+    make && ctest
 
 -----------
 Run It
 -----------
 
-    sudo ./cruisecontrol
+    ./targets/CruiseControl
 ----------------
 Plot It
 ----------------
-    python3 plot_cruise_control_data.py data_file.txt
+    python3 ../plot_cruise_control_data.py data_file.txt
 
 Example Plot
 
-INSERT PLOT
+![plot](CruiseControlResult.png)
 
-------------
-The Code
-------------
-- Class for the vehicle model
-- Class for the PID control
-- 
+-----------

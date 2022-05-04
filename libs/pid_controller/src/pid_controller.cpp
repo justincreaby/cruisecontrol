@@ -1,6 +1,5 @@
 #include "pid_controller.h"
 #include <cmath>
-#include <iostream>
 
 PIDController::PIDController(float timestepsec, float pgain, float igain, float dgain,
                              float minvalue, float maxvalue) :
@@ -44,7 +43,7 @@ float PIDController::update(float setpoint, float measuredValue)
 
   previousError = error;
 
-  std::cout << "measuredValue: " << measuredValue << ", error: " << error << ", PIDOutput: " << PIDOutput << ", PTerm: " << proportionalTerm << ", ITerm: " << integralTerm << std::endl;
+  //std::cout << "measuredValue: " << measuredValue << ", error: " << error << ", PIDOutput: " << PIDOutput << ", PTerm: " << proportionalTerm << ", ITerm: " << integralTerm << std::endl;
   return PIDOutput;
 }
 
