@@ -1,4 +1,5 @@
 #include "pid_controller.h"
+#include <cmath>
 #include <iostream>
 
 PIDController::PIDController(float timestepsec, float pgain, float igain, float dgain,
@@ -18,28 +19,33 @@ PIDController::PIDController(float timestepsec, float pgain, float igain, float 
 float PIDController::update(float setpoint, float measuredValue)
 {
   float error = setpoint - measuredValue;
+  static bool previousErrorSet = false;
+  static float previousSetpoint = setpoint;
+  if (   (!previousErrorSet)
+      || (std::abs(setpoint - previousSetpoint) > __FLT_EPSILON__))
+  {
+    // Prevent derivative spikes on first time step
+    previousError = error;
+    previousErrorSet = true;
+  }
 
   // Calculate the proportional term
   proportionalTerm = pGain * error;
 
   // Calculate the integral term
   integralTerm += error * timeStepSec * iGain;
-  limit_output(integralTerm); // Anti-Windup
+  saturate_value(integralTerm, minValue, maxValue); // Anti-Windup
 
   // Calculate the derivative term
   derivativeTerm = dGain * (error - previousError) / timeStepSec;
 
   float PIDOutput = proportionalTerm + integralTerm + derivativeTerm;
+  saturate_value(PIDOutput, minValue, maxValue);
 
   previousError = error;
 
   std::cout << "measuredValue: " << measuredValue << ", error: " << error << ", PIDOutput: " << PIDOutput << ", PTerm: " << proportionalTerm << ", ITerm: " << integralTerm << std::endl;
   return PIDOutput;
-}
-
-void PIDController::limit_output(float& value)
-{
-  saturate_value(value, minValue, maxValue);
 }
 
 void PIDController::set_p_gain(float pGain)
